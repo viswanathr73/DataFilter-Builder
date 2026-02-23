@@ -1,9 +1,9 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import InputAdornment from '@mui/material/InputAdornment';
-import type { AmountRangeValue } from '../../types';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import InputAdornment from "@mui/material/InputAdornment";
+import type { AmountRangeValue } from "../../types";
 
 interface AmountRangeInputProps {
   value: AmountRangeValue;
@@ -20,7 +20,10 @@ interface AmountRangeInputProps {
  * Both min and max are optional — the filter engine skips whichever
  * bound is left empty, so you can do "salary > $80k" by filling only min.
  */
-const AmountRangeInput: React.FC<AmountRangeInputProps> = ({ value, onChange }) => (
+const AmountRangeInput: React.FC<AmountRangeInputProps> = ({
+  value,
+  onChange,
+}) => (
   <Box
     display="flex"
     alignItems="center"
@@ -46,7 +49,7 @@ const AmountRangeInput: React.FC<AmountRangeInputProps> = ({ value, onChange }) 
           </InputAdornment>
         ),
       }}
-      inputProps={{ 'aria-label': 'Minimum salary' }}
+      inputProps={{ "aria-label": "Minimum salary" }}
     />
     <Typography color="text.disabled" sx={{ flexShrink: 0 }}>
       –
@@ -69,7 +72,7 @@ const AmountRangeInput: React.FC<AmountRangeInputProps> = ({ value, onChange }) 
           </InputAdornment>
         ),
       }}
-      inputProps={{ 'aria-label': 'Maximum salary' }}
+      inputProps={{ "aria-label": "Maximum salary" }}
     />
   </Box>
 );

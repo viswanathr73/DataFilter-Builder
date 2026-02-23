@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useRef } from "react";
+import TextField from "@mui/material/TextField";
 
 interface TextInputProps {
   value: string;
@@ -18,7 +18,7 @@ interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   value,
   onChange,
-  placeholder = 'Enter value…',
+  placeholder = "Enter value…",
   debounceMs = 300,
 }) => {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,7 +36,7 @@ const TextInput: React.FC<TextInputProps> = ({
       defaultValue={value}
       onChange={handleChange}
       placeholder={placeholder}
-      inputProps={{ 'aria-label': 'Filter text value' }}
+      inputProps={{ "aria-label": "Filter text value" }}
     />
   );
 };

@@ -8,8 +8,7 @@ import type {
 } from "../types";
 import { FIELD_DEFINITIONS } from "../data/fieldDefinitions";
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
+//  Helpers
 /**
  * Resolves a dot-notation key against a plain object.
  * e.g. getNestedValue(emp, "address.city") → "San Francisco"
@@ -53,7 +52,7 @@ function isValidDate(d: Date): boolean {
   return d instanceof Date && !isNaN(d.getTime());
 }
 
-// ─── Validation ───────────────────────────────────────────────────────────────
+//  Validation
 
 /**
  * Determines whether a FilterCondition has enough data to be applied.
@@ -104,7 +103,7 @@ export function validateCondition(
   }
 }
 
-// ─── Single-condition tester ──────────────────────────────────────────────────
+//  Single-condition tester
 
 /**
  * Tests ONE FilterCondition against ONE Employee record.
@@ -128,7 +127,7 @@ function testCondition(
   const { operator, value } = condition;
 
   switch (field.type) {
-    // ── Text ──────────────────────────────────────────────────────────────────
+    //  Text
     case "text": {
       const haystack = String(raw).toLowerCase();
       const needle = String(value ?? "").toLowerCase();
@@ -148,7 +147,7 @@ function testCondition(
       }
     }
 
-    // ── Number ────────────────────────────────────────────────────────────────
+    // Number
     case "number": {
       const n = Number(raw);
       if (operator === "between") {
@@ -179,7 +178,7 @@ function testCondition(
       }
     }
 
-    // ── Date ──────────────────────────────────────────────────────────────────
+    //  Date
     case "date": {
       const d = new Date(raw as string);
       // Guard: skip invalid dates in the dataset
@@ -215,7 +214,7 @@ function testCondition(
       return true;
     }
 
-    // ── Amount / currency ─────────────────────────────────────────────────────
+    //  Amount / currency
     case "amount": {
       if (!isRangeValue(value)) return true;
       const n = Number(raw);
@@ -226,7 +225,7 @@ function testCondition(
       return true;
     }
 
-    // ── Single-select ─────────────────────────────────────────────────────────
+    //  Single-select
     case "single-select": {
       const s = String(raw).toLowerCase();
       const fv = String(value ?? "").toLowerCase();
@@ -240,7 +239,7 @@ function testCondition(
       }
     }
 
-    // ── Multi-select (array field) ────────────────────────────────────────────
+    //  Multi-select (array field)
     case "multi-select": {
       const arr = Array.isArray(raw)
         ? raw.map((x) => String(x).toLowerCase())
@@ -261,7 +260,7 @@ function testCondition(
       }
     }
 
-    // ── Boolean ───────────────────────────────────────────────────────────────
+    //  Boolean
     case "boolean": {
       const actual = Boolean(raw);
       const expected = value === true || value === "true";

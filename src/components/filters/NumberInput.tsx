@@ -1,8 +1,8 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import type { NumberBetweenValue } from '../../types';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import type { NumberBetweenValue } from "../../types";
 
 interface NumberInputProps {
   value: string | NumberBetweenValue;
@@ -20,13 +20,17 @@ interface NumberInputProps {
  * depending on the operator. The hook handles resetting the value when the
  * operator switches between these two modes.
  */
-const NumberInput: React.FC<NumberInputProps> = ({ value, operator, onChange }) => {
+const NumberInput: React.FC<NumberInputProps> = ({
+  value,
+  operator,
+  onChange,
+}) => {
   // ── Between mode: dual inputs ─────────────────────────────────────────────
-  if (operator === 'between') {
+  if (operator === "between") {
     const range: NumberBetweenValue =
-      typeof value === 'object' && value !== null && 'min' in value
+      typeof value === "object" && value !== null && "min" in value
         ? (value as NumberBetweenValue)
-        : { min: '', max: '' };
+        : { min: "", max: "" };
 
     return (
       <Box display="flex" alignItems="center" gap={1}>
@@ -39,7 +43,7 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, operator, onChange }) 
           onChange={(e) => onChange({ ...range, min: e.target.value })}
           placeholder="0"
           InputLabelProps={{ shrink: true }}
-          inputProps={{ 'aria-label': 'Minimum number value' }}
+          inputProps={{ "aria-label": "Minimum number value" }}
         />
         <Typography color="text.disabled" sx={{ flexShrink: 0 }}>
           –
@@ -53,7 +57,7 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, operator, onChange }) 
           onChange={(e) => onChange({ ...range, max: e.target.value })}
           placeholder="∞"
           InputLabelProps={{ shrink: true }}
-          inputProps={{ 'aria-label': 'Maximum number value' }}
+          inputProps={{ "aria-label": "Maximum number value" }}
         />
       </Box>
     );
@@ -65,10 +69,10 @@ const NumberInput: React.FC<NumberInputProps> = ({ value, operator, onChange }) 
       fullWidth
       size="small"
       type="number"
-      value={typeof value === 'string' ? value : ''}
+      value={typeof value === "string" ? value : ""}
       onChange={(e) => onChange(e.target.value)}
       placeholder="Enter number…"
-      inputProps={{ 'aria-label': 'Filter number value' }}
+      inputProps={{ "aria-label": "Filter number value" }}
     />
   );
 };

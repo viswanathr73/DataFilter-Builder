@@ -4,7 +4,7 @@ import type {
   FilterValue,
   DateRangeValue,
   AmountRangeValue,
-//   NumberBetweenValue,
+  //   NumberBetweenValue,
   OperatorOption,
   Operator,
 } from "../types";

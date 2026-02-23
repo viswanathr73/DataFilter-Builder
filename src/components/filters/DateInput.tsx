@@ -1,10 +1,10 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import type { DateRangeValue } from '../../types';
+import React from "react";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import type { DateRangeValue } from "../../types";
 
 interface DateInputProps {
   value: DateRangeValue;
@@ -26,15 +26,15 @@ interface DateInputProps {
  */
 const DateInput: React.FC<DateInputProps> = ({ value, operator, onChange }) => {
   // ── Last 30 days: no input needed ─────────────────────────────────────────
-  if (operator === 'last_30_days') {
+  if (operator === "last_30_days") {
     return (
       <Chip
-        icon={<CalendarMonthIcon sx={{ fontSize: '14px !important' }} />}
+        icon={<CalendarMonthIcon sx={{ fontSize: "14px !important" }} />}
         label="Last 30 days (calculated automatically)"
         color="primary"
         variant="outlined"
         size="small"
-        sx={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.72rem' }}
+        sx={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "0.72rem" }}
         role="status"
         aria-label="Last 30 days filter is active"
       />
@@ -42,18 +42,18 @@ const DateInput: React.FC<DateInputProps> = ({ value, operator, onChange }) => {
   }
 
   // ── Before / After: single date picker ────────────────────────────────────
-  if (operator === 'before' || operator === 'after') {
+  if (operator === "before" || operator === "after") {
     return (
       <TextField
         fullWidth
         size="small"
         type="date"
-        label={operator === 'before' ? 'Before date' : 'After date'}
+        label={operator === "before" ? "Before date" : "After date"}
         value={value.from}
         onChange={(e) => onChange({ ...value, from: e.target.value })}
         InputLabelProps={{ shrink: true }}
         inputProps={{
-          'aria-label': operator === 'before' ? 'Before date' : 'After date',
+          "aria-label": operator === "before" ? "Before date" : "After date",
         }}
       />
     );
@@ -76,7 +76,7 @@ const DateInput: React.FC<DateInputProps> = ({ value, operator, onChange }) => {
         value={value.from}
         onChange={(e) => onChange({ ...value, from: e.target.value })}
         InputLabelProps={{ shrink: true }}
-        inputProps={{ 'aria-label': 'From date' }}
+        inputProps={{ "aria-label": "From date" }}
       />
       <Typography color="text.disabled" sx={{ flexShrink: 0 }}>
         –
@@ -89,7 +89,7 @@ const DateInput: React.FC<DateInputProps> = ({ value, operator, onChange }) => {
         value={value.to}
         onChange={(e) => onChange({ ...value, to: e.target.value })}
         InputLabelProps={{ shrink: true }}
-        inputProps={{ 'aria-label': 'To date' }}
+        inputProps={{ "aria-label": "To date" }}
       />
     </Box>
   );

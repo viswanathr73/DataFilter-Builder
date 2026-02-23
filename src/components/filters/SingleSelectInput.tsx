@@ -1,9 +1,9 @@
-import React from 'react';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import  Select from '@mui/material/Select';
-import type { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import React from "react";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 interface SingleSelectInputProps {
   value: string;
@@ -26,9 +26,9 @@ const SingleSelectInput: React.FC<SingleSelectInputProps> = ({
   value,
   options,
   onChange,
-  fieldLabel = 'option',
+  fieldLabel = "option",
 }) => {
-  const labelId = `single-select-label-${fieldLabel.replace(/\s/g, '-').toLowerCase()}`;
+  const labelId = `single-select-label-${fieldLabel.replace(/\s/g, "-").toLowerCase()}`;
 
   return (
     <FormControl fullWidth size="small">
@@ -38,10 +38,10 @@ const SingleSelectInput: React.FC<SingleSelectInputProps> = ({
         value={value}
         label={`Choose ${fieldLabel}`}
         onChange={(e: SelectChangeEvent) => onChange(e.target.value)}
-        inputProps={{ 'aria-label': `Select ${fieldLabel}` }}
+        inputProps={{ "aria-label": `Select ${fieldLabel}` }}
       >
         <MenuItem value="">
-          <em style={{ color: '#6b7399', fontStyle: 'normal' }}>
+          <em style={{ color: "#6b7399", fontStyle: "normal" }}>
             Select {fieldLabel}…
           </em>
         </MenuItem>

@@ -1,10 +1,10 @@
-import React from 'react';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import React from "react";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import Chip from "@mui/material/Chip";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 interface MultiSelectProps {
   value: string[];
@@ -33,7 +33,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
   value,
   options,
   onChange,
-  fieldLabel = 'options',
+  fieldLabel = "options",
 }) => (
   <Autocomplete
     multiple
@@ -66,7 +66,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
           variant="outlined"
           {...getTagProps({ index })}
           key={opt}
-          sx={{ fontSize: '0.68rem' }}
+          sx={{ fontSize: "0.68rem" }}
         />
       ))
     }
@@ -74,10 +74,10 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
     renderInput={(params) => (
       <TextField
         {...params}
-        placeholder={value.length === 0 ? `Search ${fieldLabel}…` : ''}
+        placeholder={value.length === 0 ? `Search ${fieldLabel}…` : ""}
         inputProps={{
           ...params.inputProps,
-          'aria-label': `Select ${fieldLabel}`,
+          "aria-label": `Select ${fieldLabel}`,
         }}
       />
     )}

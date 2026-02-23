@@ -1,27 +1,30 @@
-import React from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import  Select from '@mui/material/Select';
-import type { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import React from "react";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import type { FilterCondition, Operator, FilterValue } from '../../types';
-import { FIELD_DEFINITIONS, getOperatorsForField } from '../../data/fieldDefinitions';
-import DynamicInput from './DynamicInput';
+import type { FilterCondition, Operator, FilterValue } from "../../types";
+import {
+  FIELD_DEFINITIONS,
+  getOperatorsForField,
+} from "../../data/fieldDefinitions";
+import DynamicInput from "./DynamicInput";
 
 interface FilterRowProps {
   condition: FilterCondition;
   index: number;
   onUpdate: (
     id: string,
-    changes: Partial<Pick<FilterCondition, 'fieldKey' | 'operator' | 'value'>>
+    changes: Partial<Pick<FilterCondition, "fieldKey" | "operator" | "value">>,
   ) => void;
   onRemove: (id: string) => void;
 }
@@ -53,8 +56,8 @@ const FilterRow: React.FC<FilterRowProps> = ({
   const operators = fieldDef ? getOperatorsForField(fieldDef.type) : [];
 
   // Unique IDs for label association (accessibility)
-  const fieldLabelId  = `field-label-${condition.id}`;
-  const opLabelId     = `op-label-${condition.id}`;
+  const fieldLabelId = `field-label-${condition.id}`;
+  const opLabelId = `op-label-${condition.id}`;
 
   return (
     <Paper
@@ -62,17 +65,17 @@ const FilterRow: React.FC<FilterRowProps> = ({
       role="group"
       aria-label={`Filter condition ${index + 1}`}
       sx={{
-        display: 'flex',
-        alignItems: 'flex-end',
+        display: "flex",
+        alignItems: "flex-end",
         gap: 1.5,
         p: 1.5,
-        flexWrap: 'wrap',
-        bgcolor: 'background.paper',
+        flexWrap: "wrap",
+        bgcolor: "background.paper",
         // Left border turns amber when condition is complete and active
         borderLeft: condition.isValid
-          ? '3px solid #f5a623'
-          : '3px solid transparent',
-        transition: 'border-left-color 0.2s ease',
+          ? "3px solid #f5a623"
+          : "3px solid transparent",
+        transition: "border-left-color 0.2s ease",
       }}
     >
       {/* ── Row number ──────────────────────────────────────────────────── */}
@@ -81,8 +84,8 @@ const FilterRow: React.FC<FilterRowProps> = ({
         color="text.disabled"
         sx={{
           fontFamily: "'IBM Plex Mono', monospace",
-          minWidth: '16px',
-          textAlign: 'center',
+          minWidth: "16px",
+          textAlign: "center",
           pb: 1,
           flexShrink: 0,
         }}
@@ -101,7 +104,7 @@ const FilterRow: React.FC<FilterRowProps> = ({
           onChange={(e: SelectChangeEvent) =>
             onUpdate(condition.id, { fieldKey: e.target.value })
           }
-          inputProps={{ 'aria-label': 'Select field to filter' }}
+          inputProps={{ "aria-label": "Select field to filter" }}
         >
           {FIELD_DEFINITIONS.map((f) => (
             <MenuItem key={f.key} value={f.key}>
@@ -121,7 +124,7 @@ const FilterRow: React.FC<FilterRowProps> = ({
           onChange={(e: SelectChangeEvent) =>
             onUpdate(condition.id, { operator: e.target.value as Operator })
           }
-          inputProps={{ 'aria-label': 'Select filter operator' }}
+          inputProps={{ "aria-label": "Select filter operator" }}
         >
           {operators.map((op) => (
             <MenuItem key={op.value} value={op.value}>
@@ -156,22 +159,22 @@ const FilterRow: React.FC<FilterRowProps> = ({
 
       {/* ── Validity dot ─────────────────────────────────────────────────── */}
       <Tooltip
-        title={condition.isValid ? 'Filter is active' : 'Fill in a value to activate'}
+        title={
+          condition.isValid ? "Filter is active" : "Fill in a value to activate"
+        }
         placement="top"
       >
         <FiberManualRecordIcon
           role="status"
-          aria-label={condition.isValid ? 'Filter active' : 'Filter incomplete'}
+          aria-label={condition.isValid ? "Filter active" : "Filter incomplete"}
           sx={{
             fontSize: 10,
             mb: 1.2,
             flexShrink: 0,
-            color: condition.isValid ? 'success.main' : 'action.disabled',
+            color: condition.isValid ? "success.main" : "action.disabled",
             // Glow effect when active
-            filter: condition.isValid
-              ? 'drop-shadow(0 0 4px #2dd4a4)'
-              : 'none',
-            transition: 'color 0.2s ease, filter 0.2s ease',
+            filter: condition.isValid ? "drop-shadow(0 0 4px #2dd4a4)" : "none",
+            transition: "color 0.2s ease, filter 0.2s ease",
           }}
         />
       </Tooltip>
@@ -185,10 +188,10 @@ const FilterRow: React.FC<FilterRowProps> = ({
           sx={{
             mb: 0.5,
             flexShrink: 0,
-            color: 'text.disabled',
-            '&:hover': {
-              color: 'error.main',
-              bgcolor: 'rgba(240,90,90,0.08)',
+            color: "text.disabled",
+            "&:hover": {
+              color: "error.main",
+              bgcolor: "rgba(240,90,90,0.08)",
             },
           }}
         >

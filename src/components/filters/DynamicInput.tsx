@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 import type {
   FilterCondition,
   FilterValue,
   DateRangeValue,
   AmountRangeValue,
   NumberBetweenValue,
-} from '../../types';
-import { FIELD_DEFINITIONS } from '../../data/fieldDefinitions';
+} from "../../types";
+import { FIELD_DEFINITIONS } from "../../data/fieldDefinitions";
 
-import TextInput         from './TextInput';
-import NumberInput       from './NumberInput';
-import DateInput         from './DateInput';
-import AmountRangeInput  from './AmountRangeInput';
-import SingleSelectInput from './SingleSelectInput';
-import MultiSelect       from './MultiSelect';
-import BooleanInput      from './BooleanInput';
+import TextInput from "./TextInput";
+import NumberInput from "./NumberInput";
+import DateInput from "./DateInput";
+import AmountRangeInput from "./AmountRangeInput";
+import SingleSelectInput from "./SingleSelectInput";
+import MultiSelect from "./MultiSelect";
+import BooleanInput from "./BooleanInput";
 
 interface DynamicInputProps {
   condition: FilterCondition;
@@ -37,7 +37,10 @@ interface DynamicInputProps {
  *   Adding a new field type = add one case here + create the input component.
  *   Nothing else in the system needs to change.
  */
-const DynamicInput: React.FC<DynamicInputProps> = ({ condition, onValueChange }) => {
+const DynamicInput: React.FC<DynamicInputProps> = ({
+  condition,
+  onValueChange,
+}) => {
   // Find the field definition that matches this condition's fieldKey
   const fieldDef = FIELD_DEFINITIONS.find((f) => f.key === condition.fieldKey);
 
@@ -46,16 +49,16 @@ const DynamicInput: React.FC<DynamicInputProps> = ({ condition, onValueChange })
 
   switch (fieldDef.type) {
     // ── Text: name, email, role, city, state ──────────────────────────────
-    case 'text':
+    case "text":
       return (
         <TextInput
-          value={typeof condition.value === 'string' ? condition.value : ''}
+          value={typeof condition.value === "string" ? condition.value : ""}
           onChange={(v) => onValueChange(v)}
         />
       );
 
     // ── Number: projects count, performance rating ─────────────────────────
-    case 'number':
+    case "number":
       return (
         <NumberInput
           value={condition.value as string | NumberBetweenValue}
@@ -65,29 +68,29 @@ const DynamicInput: React.FC<DynamicInputProps> = ({ condition, onValueChange })
       );
 
     // ── Date: joinDate, lastReview ─────────────────────────────────────────
-    case 'date':
+    case "date":
       return (
         <DateInput
-          value={(condition.value as DateRangeValue) ?? { from: '', to: '' }}
+          value={(condition.value as DateRangeValue) ?? { from: "", to: "" }}
           operator={condition.operator}
           onChange={(v) => onValueChange(v)}
         />
       );
 
     // ── Amount: salary (currency range) ───────────────────────────────────
-    case 'amount':
+    case "amount":
       return (
         <AmountRangeInput
-          value={(condition.value as AmountRangeValue) ?? { min: '', max: '' }}
+          value={(condition.value as AmountRangeValue) ?? { min: "", max: "" }}
           onChange={(v) => onValueChange(v)}
         />
       );
 
     // ── Single Select: department, country ────────────────────────────────
-    case 'single-select':
+    case "single-select":
       return (
         <SingleSelectInput
-          value={typeof condition.value === 'string' ? condition.value : ''}
+          value={typeof condition.value === "string" ? condition.value : ""}
           options={fieldDef.options ?? []}
           onChange={(v) => onValueChange(v)}
           fieldLabel={fieldDef.label}
@@ -95,7 +98,7 @@ const DynamicInput: React.FC<DynamicInputProps> = ({ condition, onValueChange })
       );
 
     // ── Multi Select: skills ──────────────────────────────────────────────
-    case 'multi-select':
+    case "multi-select":
       return (
         <MultiSelect
           value={Array.isArray(condition.value) ? condition.value : []}
@@ -106,10 +109,10 @@ const DynamicInput: React.FC<DynamicInputProps> = ({ condition, onValueChange })
       );
 
     // ── Boolean: isActive ─────────────────────────────────────────────────
-    case 'boolean':
+    case "boolean":
       return (
         <BooleanInput
-          value={condition.value === true || condition.value === 'true'}
+          value={condition.value === true || condition.value === "true"}
           onChange={(v) => onValueChange(v)}
         />
       );

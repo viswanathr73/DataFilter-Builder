@@ -1,8 +1,8 @@
-import React from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import React from "react";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface BooleanInputProps {
   value: boolean;
@@ -26,7 +26,7 @@ interface BooleanInputProps {
 const BooleanInput: React.FC<BooleanInputProps> = ({ value, onChange }) => {
   const handleChange = (
     _: React.MouseEvent<HTMLElement>,
-    newValue: boolean | null
+    newValue: boolean | null,
   ) => {
     // Prevent deselection — boolean must always be true or false
     if (newValue !== null) {
@@ -43,11 +43,7 @@ const BooleanInput: React.FC<BooleanInputProps> = ({ value, onChange }) => {
       onChange={handleChange}
       aria-label="Boolean filter value"
     >
-      <ToggleButton
-        value={true}
-        aria-label="Active or true"
-        sx={{ gap: 0.5 }}
-      >
+      <ToggleButton value={true} aria-label="Active or true" sx={{ gap: 0.5 }}>
         <CheckIcon fontSize="small" />
         Active / True
       </ToggleButton>

@@ -1,10 +1,14 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import type { FilterCondition, Operator, FilterValue } from '../types';
-import { FIELD_DEFINITIONS, getDefaultValue, getDefaultOperator } from '../data/fieldDefinitions';
-import { validateCondition, filterEmployees } from '../utils/filterEngine';
-import { EMPLOYEES } from '../data/employees';
+import { useState, useCallback, useMemo, useEffect } from "react";
+import type { FilterCondition, Operator, FilterValue } from "../types";
+import {
+  FIELD_DEFINITIONS,
+  getDefaultValue,
+  getDefaultOperator,
+} from "../data/fieldDefinitions";
+import { validateCondition, filterEmployees } from "../utils/filterEngine";
+import { EMPLOYEES } from "../data/employees";
 
-const STORAGE_KEY = 'dfp_filter_conditions';
+const STORAGE_KEY = "dfp_filter_conditions";
 let idCounter = 0;
 const genId = () => `filter-${Date.now()}-${++idCounter}`;
 
@@ -35,8 +39,9 @@ function loadPersistedConditions(): FilterCondition[] {
  * Conditions that are not yet complete (isValid=false) are skipped silently.
  */
 export function useFilters() {
-  const [conditions, setConditions] =
-    useState<FilterCondition[]>(loadPersistedConditions);
+  const [conditions, setConditions] = useState<FilterCondition[]>(
+    loadPersistedConditions,
+  );
 
   // ── Persist to localStorage whenever conditions change ──────────────────────
   useEffect(() => {
@@ -52,11 +57,11 @@ export function useFilters() {
   const addCondition = useCallback(() => {
     const field = FIELD_DEFINITIONS[0];
     const newCondition: FilterCondition = {
-      id:        genId(),
-      fieldKey:  field.key,
-      operator:  getDefaultOperator(field.type),
-      value:     getDefaultValue(field.type),
-      isValid:   false,
+      id: genId(),
+      fieldKey: field.key,
+      operator: getDefaultOperator(field.type),
+      value: getDefaultValue(field.type),
+      isValid: false,
     };
     setConditions((prev) => [...prev, newCondition]);
   }, []);
@@ -64,7 +69,9 @@ export function useFilters() {
   const updateCondition = useCallback(
     (
       id: string,
-      changes: Partial<Pick<FilterCondition, 'fieldKey' | 'operator' | 'value'>>
+      changes: Partial<
+        Pick<FilterCondition, "fieldKey" | "operator" | "value">
+      >,
     ) => {
       setConditions((prev) =>
         prev.map((c) => {
@@ -73,42 +80,41 @@ export function useFilters() {
           let updated: FilterCondition = { ...c, ...changes };
 
           // When field changes → reset operator + value to new field's defaults
-          if ('fieldKey' in changes && changes.fieldKey !== c.fieldKey) {
+          if ("fieldKey" in changes && changes.fieldKey !== c.fieldKey) {
             const newField = FIELD_DEFINITIONS.find(
-              (f) => f.key === changes.fieldKey
+              (f) => f.key === changes.fieldKey,
             );
             if (newField) {
               updated.operator = getDefaultOperator(newField.type);
-              updated.value    = getDefaultValue(newField.type);
+              updated.value = getDefaultValue(newField.type);
             }
           }
 
           // When operator changes for number "between" ↔ single-value:
           // reset value to avoid shape mismatch
-          if (
-            'operator' in changes &&
-            changes.operator !== c.operator
-          ) {
-            const field = FIELD_DEFINITIONS.find((f) => f.key === updated.fieldKey);
-            if (field?.type === 'number') {
-              const wasBetween  = c.operator === 'between';
-              const nowBetween  = changes.operator === 'between';
+          if ("operator" in changes && changes.operator !== c.operator) {
+            const field = FIELD_DEFINITIONS.find(
+              (f) => f.key === updated.fieldKey,
+            );
+            if (field?.type === "number") {
+              const wasBetween = c.operator === "between";
+              const nowBetween = changes.operator === "between";
               if (wasBetween !== nowBetween) {
                 updated.value = getDefaultValue(field.type);
               }
             }
             // Same for date: switching to/from last_30_days needs no value
-            if (field?.type === 'date') {
+            if (field?.type === "date") {
               updated.value = getDefaultValue(field.type);
             }
           }
 
           updated.isValid = validateCondition(updated);
           return updated;
-        })
+        }),
       );
     },
-    []
+    [],
   );
 
   const removeCondition = useCallback((id: string) => {
@@ -127,12 +133,12 @@ export function useFilters() {
    */
   const filteredData = useMemo(
     () => filterEmployees(EMPLOYEES, conditions),
-    [conditions]
+    [conditions],
   );
 
   const activeCount = useMemo(
     () => conditions.filter((c) => c.isValid).length,
-    [conditions]
+    [conditions],
   );
 
   return {
@@ -142,7 +148,7 @@ export function useFilters() {
     removeCondition,
     clearAll,
     filteredData,
-    totalCount:    EMPLOYEES.length,
+    totalCount: EMPLOYEES.length,
     filteredCount: filteredData.length,
     activeCount,
   };

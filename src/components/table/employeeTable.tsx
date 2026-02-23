@@ -1,37 +1,37 @@
-import React from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import LinearProgress from '@mui/material/LinearProgress';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import DownloadIcon from '@mui/icons-material/Download';
-import SearchOffIcon from '@mui/icons-material/SearchOff';
+import React from "react";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import LinearProgress from "@mui/material/LinearProgress";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import DownloadIcon from "@mui/icons-material/Download";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
 
-import type { Employee, SortConfig } from '../../types';
-import { exportToCSV } from '../../utils/filterEngine';
+import type { Employee, SortConfig } from "../../types";
+import { exportToCSV } from "../../utils/filterEngine";
 
 // ─── Department colour map ────────────────────────────────────────────────────
 // Defined OUTSIDE the component so the object is never recreated on re-renders
 const DEPT_COLORS: Record<string, string> = {
-  Engineering: '#60a5fa',
-  Design:      '#c084fc',
-  Product:     '#2dd4bf',
-  Marketing:   '#fbbf24',
-  Sales:       '#fb923c',
-  HR:          '#f472b6',
-  Finance:     '#34d399',
-  Operations:  '#9ca3af',
+  Engineering: "#60a5fa",
+  Design: "#c084fc",
+  Product: "#2dd4bf",
+  Marketing: "#fbbf24",
+  Sales: "#fb923c",
+  HR: "#f472b6",
+  Finance: "#34d399",
+  Operations: "#9ca3af",
 };
 
 // ─── Column definitions ───────────────────────────────────────────────────────
@@ -47,8 +47,8 @@ interface Column {
 const COLS: Column[] = [
   // ── ID ─────────────────────────────────────────────────────────────────
   {
-    key: 'id',
-    label: 'ID',
+    key: "id",
+    label: "ID",
     sortable: true,
     render: (e) => (
       <Typography
@@ -63,8 +63,8 @@ const COLS: Column[] = [
 
   // ── Name + email ────────────────────────────────────────────────────────
   {
-    key: 'name',
-    label: 'Name',
+    key: "name",
+    label: "Name",
     sortable: true,
     render: (e) => (
       <Box display="flex" alignItems="center" gap={1.2}>
@@ -73,11 +73,11 @@ const COLS: Column[] = [
           sx={{
             width: 30,
             height: 30,
-            fontSize: '0.72rem',
+            fontSize: "0.72rem",
             fontWeight: 700,
-            bgcolor: 'rgba(245,166,35,0.12)',
-            color: 'primary.main',
-            border: '1px solid rgba(245,166,35,0.25)',
+            bgcolor: "rgba(245,166,35,0.12)",
+            color: "primary.main",
+            border: "1px solid rgba(245,166,35,0.25)",
           }}
           aria-hidden="true"
         >
@@ -88,7 +88,10 @@ const COLS: Column[] = [
             variant="body2"
             fontWeight={500}
             color="text.primary"
-            sx={{ fontFamily: "'IBM Plex Sans', sans-serif", fontSize: '0.8rem' }}
+            sx={{
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontSize: "0.8rem",
+            }}
           >
             {e.name}
           </Typography>
@@ -106,11 +109,11 @@ const COLS: Column[] = [
 
   // ── Department badge ────────────────────────────────────────────────────
   {
-    key: 'department',
-    label: 'Department',
+    key: "department",
+    label: "Department",
     sortable: true,
     render: (e) => {
-      const color = DEPT_COLORS[e.department] ?? '#9ca3af';
+      const color = DEPT_COLORS[e.department] ?? "#9ca3af";
       return (
         <Chip
           label={e.department}
@@ -120,7 +123,7 @@ const COLS: Column[] = [
             bgcolor: `${color}18`,
             border: `1px solid ${color}33`,
             fontWeight: 500,
-            fontSize: '0.68rem',
+            fontSize: "0.68rem",
           }}
         />
       );
@@ -129,8 +132,8 @@ const COLS: Column[] = [
 
   // ── Role ────────────────────────────────────────────────────────────────
   {
-    key: 'role',
-    label: 'Role',
+    key: "role",
+    label: "Role",
     sortable: true,
     render: (e) => (
       <Typography
@@ -145,8 +148,8 @@ const COLS: Column[] = [
 
   // ── Salary ──────────────────────────────────────────────────────────────
   {
-    key: 'salary',
-    label: 'Salary',
+    key: "salary",
+    label: "Salary",
     sortable: true,
     render: (e) => (
       <Typography
@@ -155,9 +158,9 @@ const COLS: Column[] = [
         fontWeight={600}
         sx={{ fontFamily: "'IBM Plex Mono', monospace" }}
       >
-        {e.salary.toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
+        {e.salary.toLocaleString("en-US", {
+          style: "currency",
+          currency: "USD",
           maximumFractionDigits: 0,
         })}
       </Typography>
@@ -166,8 +169,8 @@ const COLS: Column[] = [
 
   // ── Performance rating + progress bar ────────────────────────────────────
   {
-    key: 'performanceRating',
-    label: 'Rating',
+    key: "performanceRating",
+    label: "Rating",
     sortable: true,
     render: (e) => (
       <Box display="flex" alignItems="center" gap={1}>
@@ -193,24 +196,24 @@ const COLS: Column[] = [
 
   // ── Active status badge ──────────────────────────────────────────────────
   {
-    key: 'isActive',
-    label: 'Status',
+    key: "isActive",
+    label: "Status",
     sortable: true,
     render: (e) => (
       <Chip
-        label={e.isActive ? 'Active' : 'Inactive'}
+        label={e.isActive ? "Active" : "Inactive"}
         size="small"
-        color={e.isActive ? 'success' : 'default'}
+        color={e.isActive ? "success" : "default"}
         variant="outlined"
-        aria-label={e.isActive ? 'Employee is active' : 'Employee is inactive'}
+        aria-label={e.isActive ? "Employee is active" : "Employee is inactive"}
       />
     ),
   },
 
   // ── Join date ────────────────────────────────────────────────────────────
   {
-    key: 'joinDate',
-    label: 'Joined',
+    key: "joinDate",
+    label: "Joined",
     sortable: true,
     render: (e) => (
       <Typography
@@ -218,10 +221,10 @@ const COLS: Column[] = [
         color="text.secondary"
         sx={{ fontFamily: "'IBM Plex Mono', monospace" }}
       >
-        {new Date(e.joinDate).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
+        {new Date(e.joinDate).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
         })}
       </Typography>
     ),
@@ -229,8 +232,8 @@ const COLS: Column[] = [
 
   // ── Last review date ─────────────────────────────────────────────────────
   {
-    key: 'lastReview',
-    label: 'Last Review',
+    key: "lastReview",
+    label: "Last Review",
     sortable: true,
     render: (e) => (
       <Typography
@@ -238,10 +241,10 @@ const COLS: Column[] = [
         color="text.disabled"
         sx={{ fontFamily: "'IBM Plex Mono', monospace" }}
       >
-        {new Date(e.lastReview).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
+        {new Date(e.lastReview).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
         })}
       </Typography>
     ),
@@ -249,15 +252,15 @@ const COLS: Column[] = [
 
   // ── Skills chips ─────────────────────────────────────────────────────────
   {
-    key: 'skills',
-    label: 'Skills',
+    key: "skills",
+    label: "Skills",
     render: (e) => (
       <Box
         display="flex"
         alignItems="center"
         gap={0.5}
         flexWrap="nowrap"
-        aria-label={`Skills: ${e.skills.join(', ') || 'none'}`}
+        aria-label={`Skills: ${e.skills.join(", ") || "none"}`}
       >
         {e.skills.length === 0 && (
           <Typography variant="caption" color="text.disabled">
@@ -271,28 +274,24 @@ const COLS: Column[] = [
             size="small"
             variant="outlined"
             sx={{
-              fontSize: '0.62rem',
-              height: '18px',
-              borderColor: '#33395a',
-              color: 'text.secondary',
+              fontSize: "0.62rem",
+              height: "18px",
+              borderColor: "#33395a",
+              color: "text.secondary",
             }}
           />
         ))}
         {/* Show remaining skill count as a tooltip-enabled chip */}
         {e.skills.length > 2 && (
-          <Tooltip
-            title={e.skills.slice(2).join(', ')}
-            placement="top"
-            arrow
-          >
+          <Tooltip title={e.skills.slice(2).join(", ")} placement="top" arrow>
             <Chip
               label={`+${e.skills.length - 2}`}
               size="small"
               sx={{
-                fontSize: '0.62rem',
-                height: '18px',
-                cursor: 'help',
-                color: 'text.disabled',
+                fontSize: "0.62rem",
+                height: "18px",
+                cursor: "help",
+                color: "text.disabled",
               }}
             />
           </Tooltip>
@@ -303,8 +302,8 @@ const COLS: Column[] = [
 
   // ── Location (nested object: address.city, address.state, address.country)
   {
-    key: 'address',
-    label: 'Location',
+    key: "address",
+    label: "Location",
     render: (e) => (
       <Typography
         variant="caption"
@@ -318,8 +317,8 @@ const COLS: Column[] = [
 
   // ── Projects count ───────────────────────────────────────────────────────
   {
-    key: 'projects',
-    label: 'Projects',
+    key: "projects",
+    label: "Projects",
     sortable: true,
     render: (e) => (
       <Typography
@@ -345,27 +344,7 @@ interface EmployeeTableProps {
 
 /**
  * EmployeeTable — the full sortable data table.
- *
- * Structure:
- *   ┌─ Stats bar ──────────────────────────────────────────────────┐
- *   │  Showing 12 of 55 employees  [43 filtered out] [Export CSV] │
- *   ├──────────────────────────────────────────────────────────────┤
- *   │  ID  Name  Dept  Role  Salary  Rating  Status  Joined  …    │  ← sortable headers
- *   │  #1  ● Jo…  Eng…  Sr D…  $95k  ████ 4.5  Active  Mar 21  … │
- *   │  …                                                           │
- *   └──────────────────────────────────────────────────────────────┘
- *
- * Sorting:
- *   Clicking a column header cycles: asc → desc → null → asc.
- *   Managed by useSortedData hook (not this component).
- *
- * Export:
- *   "Export CSV" downloads the CURRENTLY FILTERED rows, not all 55.
- *   The exportToCSV utility in filterEngine.ts handles the download.
- *
- * Performance:
- *   COLS is defined outside the component — not recreated on re-renders.
- *   DEPT_COLORS is defined outside the component — same reason.
+
  */
 const EmployeeTable: React.FC<EmployeeTableProps> = ({
   data,
@@ -377,7 +356,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
   const isFiltered = filteredCount !== totalCount;
 
   const handleExport = () => {
-    exportToCSV(data, 'employees-filtered.csv');
+    exportToCSV(data, "employees-filtered.csv");
   };
 
   return (
@@ -385,18 +364,18 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
       variant="outlined"
       component="section"
       aria-label="Employee data table"
-      sx={{ overflow: 'hidden' }}
+      sx={{ overflow: "hidden" }}
     >
       {/* ── Stats bar ───────────────────────────────────────────────────────── */}
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
           px: 2,
           py: 1.25,
-          bgcolor: '#1e2332',
-          flexWrap: 'wrap',
+          bgcolor: "#1e2332",
+          flexWrap: "wrap",
           gap: 1,
         }}
       >
@@ -414,7 +393,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
             color="text.secondary"
             sx={{ fontFamily: "'IBM Plex Mono', monospace" }}
           >
-            Showing{' '}
+            Showing{" "}
             <Typography
               component="strong"
               color="text.primary"
@@ -425,7 +404,8 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
             </Typography>
             {isFiltered && (
               <>
-                {' '}of{' '}
+                {" "}
+                of{" "}
                 <Typography
                   component="strong"
                   color="text.primary"
@@ -435,7 +415,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
                   {totalCount.toLocaleString()}
                 </Typography>
               </>
-            )}{' '}
+            )}{" "}
             employees
           </Typography>
           {/* Red badge showing how many were filtered out */}
@@ -445,7 +425,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
               size="small"
               color="error"
               variant="outlined"
-              sx={{ fontSize: '0.68rem' }}
+              sx={{ fontSize: "0.68rem" }}
             />
           )}
         </Box>
@@ -459,9 +439,9 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
           disabled={data.length === 0}
           aria-label={`Export ${filteredCount} employees to CSV`}
           sx={{
-            borderColor: '#33395a',
-            color: 'text.secondary',
-            '&:hover': { borderColor: 'primary.main', color: 'primary.main' },
+            borderColor: "#33395a",
+            color: "text.secondary",
+            "&:hover": { borderColor: "primary.main", color: "primary.main" },
           }}
         >
           Export CSV
@@ -472,7 +452,7 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
 
       {/* ── Scrollable table ────────────────────────────────────────────────── */}
       <TableContainer
-        sx={{ maxHeight: 'calc(100vh - 340px)', overflowX: 'auto' }}
+        sx={{ maxHeight: "calc(100vh - 340px)", overflowX: "auto" }}
         tabIndex={0}
         aria-label="Employee table, scrollable"
       >
@@ -492,15 +472,13 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
                   sortDirection={
                     sort.key === col.key && sort.dir ? sort.dir : false
                   }
-                  sx={{ position: 'sticky', top: 0, zIndex: 1 }}
+                  sx={{ position: "sticky", top: 0, zIndex: 1 }}
                 >
                   {col.sortable ? (
                     <TableSortLabel
                       active={sort.key === col.key && sort.dir !== null}
                       direction={
-                        sort.key === col.key && sort.dir
-                          ? sort.dir
-                          : 'asc'
+                        sort.key === col.key && sort.dir ? sort.dir : "asc"
                       }
                       onClick={() => onSort(col.key)}
                       aria-label={`Sort by ${col.label}`}
@@ -520,17 +498,14 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
             {data.length === 0 ? (
               /* Empty state row */
               <TableRow>
-                <TableCell
-                  colSpan={COLS.length}
-                  sx={{ border: 0, p: 0 }}
-                >
+                <TableCell colSpan={COLS.length} sx={{ border: 0, p: 0 }}>
                   <Box
-                    sx={{ py: 8, textAlign: 'center' }}
+                    sx={{ py: 8, textAlign: "center" }}
                     role="status"
                     aria-label="No matching employees"
                   >
                     <SearchOffIcon
-                      sx={{ fontSize: 40, color: 'text.disabled', mb: 1.5 }}
+                      sx={{ fontSize: 40, color: "text.disabled", mb: 1.5 }}
                       aria-hidden="true"
                     />
                     <Typography color="text.secondary" fontSize="0.875rem">
@@ -559,8 +534,8 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
                     // Alternating row background for readability
                     bgcolor:
                       rowIndex % 2 === 0
-                        ? 'transparent'
-                        : 'rgba(30,35,50,0.35)',
+                        ? "transparent"
+                        : "rgba(30,35,50,0.35)",
                   }}
                 >
                   {COLS.map((col) => (
@@ -568,7 +543,9 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
                       {col.render
                         ? col.render(emp)
                         : String(
-                            (emp as unknown as Record<string, unknown>)[col.key] ?? ''
+                            (emp as unknown as Record<string, unknown>)[
+                              col.key
+                            ] ?? "",
                           )}
                     </TableCell>
                   ))}
