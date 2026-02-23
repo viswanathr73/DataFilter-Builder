@@ -1,4 +1,4 @@
-// Domain Types
+// Domain Types 
 
 export interface Address {
   city: string;
