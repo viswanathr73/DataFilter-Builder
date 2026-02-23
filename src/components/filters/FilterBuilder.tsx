@@ -57,7 +57,7 @@ const FilterBuilder: React.FC<FilterBuilderProps> = ({
         alignItems: "center",
         justifyContent: "space-between",
         px: 2,
-        py: 1.5,
+        py: 1,
         bgcolor: "#1e2332",
         flexWrap: "wrap",
         gap: 1,
@@ -117,7 +117,7 @@ const FilterBuilder: React.FC<FilterBuilderProps> = ({
     {conditions.length === 0 ? (
       /* Empty state */
       <Box
-        sx={{ py: 5, px: 3, textAlign: "center" }}
+        sx={{ py: 2, px: 3, textAlign: "center" }}
         role="status"
         aria-label="No filters applied"
       >
