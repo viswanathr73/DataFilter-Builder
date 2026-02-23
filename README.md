@@ -3,7 +3,7 @@
 A production-grade, type-safe dynamic filter component system built with **React 18 + TypeScript + Vite**.
 
 ## Live Demo
-> Deploy to Vercel/Netlify: `npm run build` → drag `/dist` folder
+>  Vercel link: `
 
 ---
 

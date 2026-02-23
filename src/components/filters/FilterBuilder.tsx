@@ -10,7 +10,7 @@ import FilterListOffIcon from "@mui/icons-material/FilterListOff";
 import AddIcon from "@mui/icons-material/Add";
 import InboxIcon from "@mui/icons-material/Inbox";
 
-import type { FilterCondition, FilterValue } from "../../types";
+import type { FilterCondition } from "../../types";
 import FilterRow from "./FilterRow";
 
 interface FilterBuilderProps {

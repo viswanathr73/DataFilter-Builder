@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
-import type { FilterCondition, Operator, FilterValue } from "../types";
+import type { FilterCondition } from "../types";
 import {
   FIELD_DEFINITIONS,
   getDefaultValue,
